@@ -20,6 +20,7 @@ artifacts/*.json
 !artifacts/model.pt
 !artifacts/labels.json
 mlruns/
+mlflow.db
 data/raw/
 data/processed/
 
