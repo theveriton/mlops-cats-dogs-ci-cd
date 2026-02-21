@@ -24,3 +24,9 @@ jobs:
 
       - name: Post-deploy smoke tests
         run: bash scripts/smoke_test.sh http://localhost:8000 tests/assets/sample.png
+
+      - name: Dump container logs on failure
+        if: failure()
+        run: |
+          docker compose -f deploy/compose/docker-compose.prod.yml ps
+          docker compose -f deploy/compose/docker-compose.prod.yml logs --tail=100 app
