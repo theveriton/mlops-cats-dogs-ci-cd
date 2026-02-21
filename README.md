@@ -7,6 +7,14 @@ End-to-end baseline MLOps implementation for Assignment 2:
 - GitHub Actions CI/CD with post-deploy smoke tests
 - DVC pipeline definition for reproducible training
 
+## Contributors
+
+- ARYAMANN SINGH - 2024aa05025
+- ANANTHAN P   - 2024aa05692
+- BALAJI R  - 2024aa05844
+- BALSURE ANIKET K  - 2024aa05296
+- SAURAV BANSAL - 2023aa05710
+
 ## 1) Project structure
 
 ```text
