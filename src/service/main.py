@@ -22,7 +22,17 @@ app = FastAPI(title="Cats vs Dogs Classifier")
 
 MODEL_PATH = Path(os.getenv("MODEL_PATH", "artifacts/model.pt"))
 LABELS_PATH = Path(os.getenv("LABELS_PATH", "artifacts/labels.json"))
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+def get_device() -> torch.device:
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
+DEVICE = get_device()
 
 REQUEST_COUNT = 0
 TOTAL_LATENCY_SEC = 0.0

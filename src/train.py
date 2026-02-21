@@ -17,6 +17,14 @@ from src.data import build_preprocess_transform
 from src.model import SimpleCNN, save_checkpoint
 
 
+def get_device() -> torch.device:
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train a Cats vs Dogs baseline CNN")
     parser.add_argument("--data-dir", type=Path, default=Path("data/processed"))
@@ -57,7 +65,7 @@ def evaluate(model: nn.Module, loader: DataLoader, device: torch.device) -> tupl
 
 
 def train(args: argparse.Namespace) -> None:
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_device()
 
     train_loader, classes = make_loader(args.data_dir / "train", args.batch_size, train=True)
     val_loader, _ = make_loader(args.data_dir / "val", args.batch_size, train=False)
