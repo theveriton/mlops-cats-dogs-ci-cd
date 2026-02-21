@@ -1,0 +1,30 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+.env
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+
+# ML artifacts
+artifacts/*.pt
+artifacts/*.pth
+artifacts/*.pkl
+artifacts/*.h5
+artifacts/*.png
+artifacts/*.json
+!artifacts/model.pt
+!artifacts/labels.json
+mlruns/
+data/raw/
+data/processed/
+
+# DVC cache
+.dvc/cache/
+
+# local runtime
+logs/

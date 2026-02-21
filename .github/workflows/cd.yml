@@ -1,0 +1,26 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set image name
+        run: echo "IMAGE_NAME=ghcr.io/${{ github.repository }}:latest" >> $GITHUB_ENV
+
+      - name: Deploy with Docker Compose
+        run: |
+          docker compose -f deploy/compose/docker-compose.prod.yml pull
+          docker compose -f deploy/compose/docker-compose.prod.yml up -d
+
+      - name: Post-deploy smoke tests
+        run: bash scripts/smoke_test.sh http://localhost:8000 tests/assets/sample.png

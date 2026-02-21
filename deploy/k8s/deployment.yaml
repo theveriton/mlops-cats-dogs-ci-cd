@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cats-dogs-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cats-dogs-api
+  template:
+    metadata:
+      labels:
+        app: cats-dogs-api
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/owner/mlopssecond:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL_PATH
+              value: /app/artifacts/model.pt
+            - name: LABELS_PATH
+              value: /app/artifacts/labels.json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cats-dogs-api
+spec:
+  selector:
+    app: cats-dogs-api
+  ports:
+    - port: 80
+      targetPort: 8000
+      protocol: TCP
+  type: ClusterIP

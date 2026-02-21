@@ -1,0 +1,17 @@
+stages:
+  train:
+    cmd: python -m src.train --data-dir data/processed --epochs 3 --batch-size 32 --learning-rate 0.001 --output-dir artifacts
+    deps:
+      - src/train.py
+      - src/data.py
+      - src/model.py
+      - data/processed
+    params:
+      - train.epochs
+      - train.batch_size
+      - train.learning_rate
+    outs:
+      - artifacts/model.pt
+      - artifacts/labels.json
+      - artifacts/confusion_matrix.png
+      - artifacts/loss_curve.png

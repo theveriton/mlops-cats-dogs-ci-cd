@@ -1,0 +1,10 @@
+services:
+  app:
+    image: ${IMAGE_NAME:-ghcr.io/owner/mlopssecond:latest}
+    container_name: cats-dogs-api
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=/app/artifacts/model.pt
+      - LABELS_PATH=/app/artifacts/labels.json
+    restart: unless-stopped
