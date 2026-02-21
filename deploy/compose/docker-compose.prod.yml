@@ -1,6 +1,7 @@
 services:
   app:
     image: ${IMAGE_NAME}
+    platform: linux/arm64
     container_name: cats-dogs-api
     ports:
       - "8000:8000"
